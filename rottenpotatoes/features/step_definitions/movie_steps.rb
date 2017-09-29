@@ -1,6 +1,7 @@
 # Add a declarative step here for populating the DB with movies.
 
 Given /the following movies exist/ do |movies_table|
+  p movies_table.hashes.length
   movies_table.hashes.each do |movie|
     # p movie
     # each returned element will be a hash whose key is the table header.
@@ -21,17 +22,15 @@ Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
   # fail "Unimplemented"
-  l= '/' +e1 +'/'
-  r= '/'+e2+'/'
-  p l
-  p page.body
+  # p l
+  # p page.body
   lindex=page.body=~/#{e1}/
-
   rindex=page.body=~/#{e2}/
-  if lindex<rl
-  p lindex
-  p rindex
-  
+  if lindex==nil || rindex==nil
+    raise "not exist"
+  elsif lindex> rindex
+    raise "sort error"
+  end
   
   
 end
