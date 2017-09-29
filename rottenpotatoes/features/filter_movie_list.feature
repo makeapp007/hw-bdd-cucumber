@@ -23,11 +23,21 @@ Background: movies have been added to database
   Then 10 seed movies should exist
 
 Scenario: restrict to movies with 'PG' or 'R' ratings
+  When I check "ratings_PG" 
+  And I check "ratings_R"
+  And I uncheck "ratings_PG-13"
+  And I uncheck "ratings_G"
   # enter step(s) to check the 'PG' and 'R' checkboxes
   # enter step(s) to uncheck all other checkboxes
   # enter step to "submit" the search form on the homepage
+  And I press "ratings_submit"
+  # And I should see  "The Terminator"
+  # Then I should see "The Terminator"
+  # Then I should not see "Aladdin"
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should see movies with titles: "The Terminator","When Harry Met Sally","Amelie","The Incredibles","Raiders of the Lost Ark"
   # enter step(s) to ensure that other movies are not visible
+  Then I should not see movies with titles: "Aladdin","The Help","Chocolat","2001: A Space Odyssey","Chicken Run"
 
 Scenario: all ratings selected
   # see assignment
