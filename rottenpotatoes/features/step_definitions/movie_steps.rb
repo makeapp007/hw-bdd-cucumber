@@ -20,7 +20,20 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  fail "Unimplemented"
+  # fail "Unimplemented"
+  l= '/' +e1 +'/'
+  r= '/'+e2+'/'
+  p l
+  p page.body
+  lindex=page.body=~/#{e1}/
+
+  rindex=page.body=~/#{e2}/
+  if lindex<rl
+  p lindex
+  p rindex
+  
+  
+  
 end
 
 Then /I should (not )?see movies with titles: (.*)/ do |e1, e2|
@@ -49,10 +62,23 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
   # fail "Unimplemented"
+  rating_list.split(",").each do |x|
+    steps %{
+      When I #{uncheck}check "ratings_#{x}" 
+    }
+  end
+  
   
 end
 
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
-  fail "Unimplemented"
+  # fail "Unimplemented"
+  movies=Movie.all
+  movies.each do |x|
+    title=x[:title]
+    steps %{
+      Then I should see "#{title}"
+    }  
+  end
 end
